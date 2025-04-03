@@ -1,7 +1,9 @@
 function Dashboard({ answerList }) {
+  console.log(answerList);
+  
   return (
     <div>
-      <h2>Answers</h2>
+      <h2>Your Answers</h2>
       {answerList.map((answer, index) => (
         <p key={index}>{answer}</p>
       ))}

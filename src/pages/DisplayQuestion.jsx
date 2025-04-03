@@ -1,15 +1,25 @@
-function DisplayQuestion({ question, storingAnswer }) {
+// import { useState } from "react";
+import { Link } from "react-router-dom";
+// import AttemptTest from "./AttemptTest";
+import Dashboard from "./Dashboard";
+
+function DisplayQuestion({ question ,storingAnswer }) {
+
+
   return (
-    <div>
-      <h3>{question.question}</h3>
-      <div>
-        {question.options.map((option, index) => (
-          <p key={index} onClick={() => storingAnswer(option)}>
-            {option}
-          </p>
-        ))}
+    <>
+      <h3 className="question">{question.question}</h3>
+      <div className="options">
+        {question.options.map((option, index) => {
+          return (
+            <p key={index} onClick={() => storingAnswer(option)}>
+              {option}
+            </p>
+          );
+        })}
       </div>
-    </div>
+      <Link to="/">Quit Quiz</Link>
+    </>
   );
 }
 
