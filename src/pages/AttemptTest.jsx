@@ -16,7 +16,11 @@ function AttemptTest() {
   const [loading, setLoading] = useState(true);
   const [questionNumber, setQuestionNumber] = useState(0);
   const [time, setTime] = useState(2);
-  const [answerList, setAnswerList] = useState([])
+  const [answerList, setAnswerList] = useState({
+    questionNumber:"",
+    answer:""
+  })
+  const [userAnswers,setUserAnswers] = useState([])
   const [showDashboard, setShowDashboard] = useState(false)
 
   useEffect(() => {
@@ -43,32 +47,34 @@ function AttemptTest() {
         setTime((prev) => prev - 1);
       }
     }, 1000);
-
+    
     return () => clearInterval(interval);
   }, [questions, time]);
-
+  
   async function fetchData(testID) {
     setLoading(true);
     setQuestions(await fetchQuestions(testID));
     setLoading(false);
   }
 
-  function changeQuestion(){
-      setQuestionNumber((prev)=>prev+1)
-      setTime(2)
+  function changeQuestion() {
+    setQuestionNumber((prev) => prev + 1)
+    setTime(2)
   }
 
   function storingAnswer(answer) {
-    setAnswerList([...answerList, answer])
+    setAnswerList((prev)=>({...prev,answer:answer,questionNumber:questionNumber}))
+    setUserAnswers([answerList])
   }
-
+  console.log(userAnswers);
+  
   if (loading) return <div id="loading">LOADING...</div>;
   if (showDashboard) return <Dashboard answerList={answerList} />
   return (
     <div className="quizBlock" >
       <DisplayQuestion question={questions[questionNumber]} storingAnswer={storingAnswer} />
-      <button onClick={()=>changeQuestion()}>Next Question</button>
-      
+      <button onClick={() => changeQuestion()}>Next Question</button>
+
       <h1>{time}</h1>
     </div>
   );
