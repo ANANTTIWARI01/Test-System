@@ -1,11 +1,12 @@
-function Dashboard({ answerList }) {
-  console.log(answerList);
+function Dashboard({ answerList ,questionNumber }) {
+  console.log(questionNumber);
   
   return (
     <div>
       <h2>Your Answers</h2>
       {answerList.map((answer, index) => (
-        <p key={index}>{answer}</p>
+        
+        <p key={index}>{index +1 }{answer} </p>
       ))}
     </div>
   );

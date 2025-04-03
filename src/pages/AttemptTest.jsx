@@ -60,7 +60,7 @@ setAnswerList([...answerList,answer])
 
 
   if (loading) return <div id="loading">LOADING...</div>;
-   if(showDashboard) return <Dashboard answerList={answerList} />
+   if(showDashboard) return <Dashboard answerList={answerList} questionNumber={questionNumber} />
   return (
     <div className="quizBlock">
       <DisplayQuestion question={questions[questionNumber]} storingAnswer={storingAnswer}/>
