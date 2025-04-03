@@ -2,19 +2,28 @@
 import { Link } from "react-router-dom";
 // import AttemptTest from "./AttemptTest";
 import Dashboard from "./Dashboard";
+import { useEffect, useState } from "react";
+// import { useState } from "react";
 
-function DisplayQuestion({ question ,storingAnswer }) {
+function DisplayQuestion({ question, storingAnswer }) {
+    const [selectedOption,setSelectedOption] = useState(null)
+  
+    useEffect(()=>{
+setSelectedOption(null)
+    },[question])
 
-
+    function handleOption(option){
+setSelectedOption(option)
+    }
   return (
     <>
       <h3 className="question">{question.question}</h3>
       <div className="options">
         {question.options.map((option, index) => {
           return (
-            <p key={index} onClick={() => storingAnswer(option)}>
+            <button key={index} onClick={() => {storingAnswer(option);handleOption(option)}} disabled={!!selectedOption}  >
               {option}
-            </p>
+            </ button>
           );
         })}
       </div>
@@ -23,4 +32,4 @@ function DisplayQuestion({ question ,storingAnswer }) {
   );
 }
 
-export default DisplayQuestion;
+export default DisplayQuestion; 

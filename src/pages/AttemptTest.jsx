@@ -16,8 +16,8 @@ function AttemptTest() {
   const [loading, setLoading] = useState(true);
   const [questionNumber, setQuestionNumber] = useState(0);
   const [time, setTime] = useState(2);
-  const [answerList,setAnswerList] = useState([])
-  const [showDashboard,setShowDashboard] =useState(false)
+  const [answerList, setAnswerList] = useState([])
+  const [showDashboard, setShowDashboard] = useState(false)
 
   useEffect(() => {
     if (testID) {
@@ -54,16 +54,17 @@ function AttemptTest() {
   }
 
 
-   function storingAnswer(answer){
-setAnswerList([...answerList,answer])
-   }
+  function storingAnswer(answer) {
+    setAnswerList([...answerList, answer])
+    // setSelectedOption(true)
+  }
 
 
   if (loading) return <div id="loading">LOADING...</div>;
-   if(showDashboard) return <Dashboard answerList={answerList} questionNumber={questionNumber} />
+  if (showDashboard) return <Dashboard answerList={answerList}  />
   return (
-    <div className="quizBlock">
-      <DisplayQuestion question={questions[questionNumber]} storingAnswer={storingAnswer}/>
+    <div className="quizBlock" >
+      <DisplayQuestion question={questions[questionNumber]} storingAnswer={storingAnswer} />
       <h1>{time}</h1>
     </div>
   );
