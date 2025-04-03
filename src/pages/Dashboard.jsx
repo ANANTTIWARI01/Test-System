@@ -1,14 +1,14 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { Link } from "react-router-dom";
 
-function Dashboard({ answerList }) {
-    // const [userAnswers,setUserAnswers] = useState({})
+function Dashboard({userAnswers }) {
+// console.log(userAnswers);
 
   return (
     <div>
       <h2>Your Answers</h2>
-      {answerList.answer.map((answer, index) => (
-        <p key={index}>{index + 1}{answer} </p>
+      {userAnswers.map((answer, index) => (
+        <p key={index}>{index + 1}{answer.answer +1 } </p>
       ))}
       <Link to="/">Main Menu</Link>
     </div>

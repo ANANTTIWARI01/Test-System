@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../context/Auth";
+import instance from "../axiosConfig";
+
 import DisplayQuestion from "./DisplayQuestion";
 import Dashboard from "./Dashboard";
 
@@ -17,10 +19,10 @@ function AttemptTest() {
   const [questionNumber, setQuestionNumber] = useState(0);
   const [time, setTime] = useState(2);
   const [answerList, setAnswerList] = useState({
-    questionNumber:"",
-    answer:""
+    questionNumber: "",
+    answer: ""
   })
-  const [userAnswers,setUserAnswers] = useState([])
+  const [userAnswers, setUserAnswers] = useState([])
   const [showDashboard, setShowDashboard] = useState(false)
 
   useEffect(() => {
@@ -35,8 +37,9 @@ function AttemptTest() {
     interval = setInterval(() => {
       if (time === 1) {
         if (questionNumber >= questions.length - 1) {
+          postingData()
+
           clearInterval(interval);
-          // navigate("/dashboard");
           setShowDashboard(true)
         } else {
           console.log(questions.length, questionNumber);
@@ -47,10 +50,10 @@ function AttemptTest() {
         setTime((prev) => prev - 1);
       }
     }, 1000);
-    
+
     return () => clearInterval(interval);
   }, [questions, time]);
-  
+
   async function fetchData(testID) {
     setLoading(true);
     setQuestions(await fetchQuestions(testID));
@@ -63,13 +66,35 @@ function AttemptTest() {
   }
 
   function storingAnswer(answer) {
-    setAnswerList((prev)=>({...prev,answer:answer,questionNumber:questionNumber}))
-    setUserAnswers([answerList])
+    setAnswerList((prev) => ({ ...prev, answer: answer, questionNumber: questionNumber }))
+    // setUserAnswers((prev)=>([...prev,answerList]))
+
   }
-  console.log(userAnswers);
-  
+
+
+  useEffect(() => {
+    if (answerList.questionNumber !== "" && answerList.answer !== "") {
+      setUserAnswers((prev) => [...prev, answerList]);
+    }
+  }, [answerList]);
+  console.log(answerList, userAnswers);
+
+
+  async function postingData() {
+    try {
+      const response = await instance.put("/user/test/submit/" + testID, userAnswers)
+      console.log(response);
+    }
+    catch (error) {
+      console.log(error);
+
+    }
+  }
+
+  // console.log(userAnswers);
+
   if (loading) return <div id="loading">LOADING...</div>;
-  if (showDashboard) return <Dashboard answerList={answerList} />
+  if (showDashboard) return <Dashboard userAnswers={userAnswers} />
   return (
     <div className="quizBlock" >
       <DisplayQuestion question={questions[questionNumber]} storingAnswer={storingAnswer} />

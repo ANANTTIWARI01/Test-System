@@ -18,12 +18,12 @@ function DisplayQuestion({ question, storingAnswer }) {
       <div className="options">
         {question.options.map((option, index) => {
           return (
-            <div>
+            
               <button key={index} onClick={() => { storingAnswer(option); handleOption(option) }} disabled={!!selectedOption}  >
                 {option}
               </ button>
 
-            </div>
+            
           );
 
         })}
