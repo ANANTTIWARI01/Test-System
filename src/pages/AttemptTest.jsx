@@ -53,18 +53,22 @@ function AttemptTest() {
     setLoading(false);
   }
 
+  function changeQuestion(){
+      setQuestionNumber((prev)=>prev+1)
+      setTime(2)
+  }
 
   function storingAnswer(answer) {
     setAnswerList([...answerList, answer])
-    // setSelectedOption(true)
   }
 
-
   if (loading) return <div id="loading">LOADING...</div>;
-  if (showDashboard) return <Dashboard answerList={answerList}  />
+  if (showDashboard) return <Dashboard answerList={answerList} />
   return (
     <div className="quizBlock" >
       <DisplayQuestion question={questions[questionNumber]} storingAnswer={storingAnswer} />
+      <button onClick={()=>changeQuestion()}>Next Question</button>
+      
       <h1>{time}</h1>
     </div>
   );

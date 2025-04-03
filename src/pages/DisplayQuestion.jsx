@@ -15,16 +15,23 @@ setSelectedOption(null)
     function handleOption(option){
 setSelectedOption(option)
     }
+
+
+
   return (
     <>
       <h3 className="question">{question.question}</h3>
       <div className="options">
         {question.options.map((option, index) => {
           return (
+            <div>
             <button key={index} onClick={() => {storingAnswer(option);handleOption(option)}} disabled={!!selectedOption}  >
               {option}
             </ button>
+            
+            </div>
           );
+          
         })}
       </div>
       <Link to="/">Quit Quiz</Link>
