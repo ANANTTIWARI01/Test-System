@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../context/Auth";
 import instance from "../axiosConfig";
-
 import DisplayQuestion from "./DisplayQuestion";
 import Dashboard from "./Dashboard";
 
@@ -66,7 +65,7 @@ function AttemptTest() {
   }
 
   function storingAnswer(answer) {
-    setAnswerList((prev) => ({ ...prev, answer: answer, questionNumber: questionNumber }))
+    setAnswerList((prev) => ({ ...prev, [questionNumber]:answer}))
     // setUserAnswers((prev)=>([...prev,answerList]))
 
   }
@@ -77,12 +76,12 @@ function AttemptTest() {
       setUserAnswers((prev) => [...prev, answerList]);
     }
   }, [answerList]);
-  console.log(answerList, userAnswers);
+  console.log(userAnswers);
 
 
   async function postingData() {
     try {
-      const response = await instance.put("/user/test/submit/" + testID, userAnswers)
+      const response = await instance.put("/user/test/submit/" + testID, userAnswers, { withCredentials: true })
       console.log(response);
     }
     catch (error) {

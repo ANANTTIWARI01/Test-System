@@ -57,7 +57,7 @@ function Auth({ children }) {
       console.error(error);
     }
   }
-
+         
   return (
     <AuthContext.Provider
       value={{
