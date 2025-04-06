@@ -10,7 +10,7 @@ function Dashboard({userAnswers }) {
       {userAnswers.map((answer, index) => (
         <p key={index}>{index + 1}{answer.answer +1 } </p>
       ))}
-      <Link to="/">Main Menu</Link>
+      <Link to="/">Main Menu.</Link>
     </div>
   );
 }
